@@ -30,6 +30,10 @@ jobs:
       - name: Add .nojekyll file
         # The output path is now inside the subfolder as well.
         run: touch ./happy_23th_birthday_be/release/wwwroot/.nojekyll
+      - name: Create 404.html for SPA routing
+        # This copies the main index.html to 404.html.
+        # This is a trick to make routing work correctly on GitHub Pages.
+        run: cp ./happy_23th_birthday_be/release/wwwroot/index.html ./happy_23th_birthday_be/release/wwwroot/404.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
