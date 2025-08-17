@@ -17,7 +17,7 @@
       "url": "images\/our-favourite-pic.jpeg"
     },
     {
-      "hash": "sha256-sNpeSzhIMcq85Mye0poKJNjkyJGSh3\/OzKsSw9nQTfE=",
+      "hash": "sha256-7AUnGveiE8hKKikwwOZuoEPXPnV5xcRaB88eEazbBT8=",
       "url": "index.html"
     },
     {
@@ -77,7 +77,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-91n0tQNT2wioeA\/TXlwzQ9kzO\/5UPMtYmZc+NTKulic=",
+      "hash": "sha256-2shbswareifnRf7djpIVuMglSPSqjaMsYDQRqNnN74E=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -85,7 +85,7 @@
       "url": "_framework\/Blazored.LocalStorage.wasm"
     },
     {
-      "hash": "sha256-8RLcCbnuBW2+A5CRswDxGeg3szzzqYizFP3UHn3Elz4=",
+      "hash": "sha256-loqoiKPe2nbF\/I8koWomc6nGgBQSjHb7mcMWODNcBoY=",
       "url": "_framework\/happy_23th_birthday_be.wasm"
     },
     {
@@ -257,5 +257,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "cTqNKpIj"
+  "version": "lIuE+TPZ"
 };
