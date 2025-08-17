@@ -1,0 +1,110 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Onde foi o nosso primeiro encontro?",
+      "options": [ "Nossa Casa", "Bucadim", "Shopping" ],
+      "correctAnswerIndex": 2,
+      "rewardId": 101
+    },
+    {
+      "id": 2,
+      "questionText": "Em que ano nos conhecemos?",
+      "options": [ "2020", "2021", "2022" ],
+      "correctAnswerIndex": 1,
+      "rewardId": 102
+    },
+    {
+      "id": 3,
+      "questionText": "Em que mês nos conhecemos?",
+      "options": [ "Abril", "Maio", "Junho" ],
+      "correctAnswerIndex": 1,
+      "rewardId": 103
+    },
+    {
+      "id": 4,
+      "questionText": "Qual jogo jogávamos juntos?",
+      "options": [ "Free Fire", "PUBG", "LoL" ],
+      "correctAnswerIndex": 1,
+      "rewardId": 104
+    },
+    {
+      "id": 5,
+      "questionText": "Qual o filme que mais assistimos juntos?",
+      "options": [ "Shrek", "A Casa Monstro", "Coraline" ],
+      "correctAnswerIndex": 2,
+      "rewardId": 105
+    },
+    {
+      "id": 6,
+      "questionText": "Onde fazíamos piquenique?",
+      "options": [ "Praça do Pintolândia", "Praça Ayrton Senna", "Mirandinha" ],
+      "correctAnswerIndex": 2,
+      "rewardId": 106
+    },
+    {
+      "id": 7,
+      "questionText": "Qual dos lanches abaixo era nosso favorito?",
+      "options": [ "Dudu's Buger - Praça da Bandeira", "Don Ramon - Bola do Centro", "Pizzaria Luna - Perto de Casa" ],
+      "correctAnswerIndex": -1,
+      "rewardId": 107
+    },
+    {
+      "id": 8,
+      "questionText": "Por qual comida íamos pro Shopping quase todos os dias?",
+      "options": [ "Sushi", "Hambúrguer", "Pizza" ],
+      "correctAnswerIndex": 0,
+      "rewardId": 108
+    }
+  ],
+  "rewards": [
+    {
+      "id": 101,
+      "title": "Vale - Um grande abraço",
+      "description": "Use para você receber um abraço de qualidade.",
+      "isClaimed": false
+    },
+    {
+      "id": 102,
+      "title": "Vale - Massagem",
+      "description": "Use para receber uma massagem onde quiser.",
+      "isClaimed": false
+    },
+    {
+      "id": 103,
+      "title": "Vale - Massagem",
+      "description": "Use para receber uma massagem onde quiser.",
+      "isClaimed": false
+    },
+    {
+      "id": 104,
+      "title": "Vale - Sim",
+      "description": "Use para me obrigar a dizer sim para qualquer coisa.",
+      "isClaimed": false
+    },
+    {
+      "id": 105,
+      "title": "Vale - Massagem",
+      "description": "Use para receber uma massagem onde quiser.",
+      "isClaimed": false
+    },
+    {
+      "id": 106,
+      "title": "Vale - Massagem",
+      "description": "Use para receber uma massagem onde quiser.",
+      "isClaimed": false
+    },
+    {
+      "id": 107,
+      "title": "Vale - DJ",
+      "description": "Eu sei ser DJ, quer ver? 😏",
+      "isClaimed": false
+    },
+    {
+      "id": 108,
+      "title": "Vale - Beijo",
+      "description": "Use para receber alguns belos beijos na minha namorada. 🔥",
+      "isClaimed": false
+    }
+  ]
+}

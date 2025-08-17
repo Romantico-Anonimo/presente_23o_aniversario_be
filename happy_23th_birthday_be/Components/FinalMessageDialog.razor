@@ -1,0 +1,26 @@
+﻿@* This component will be our final gift card pop-up *@
+<MudDialog>
+    <DialogContent>
+        <MudCard Elevation="10">
+            <MudCardMedia Image="/images/our-favourite-pic.jpeg" Height="250" />
+            <MudCardContent>
+                <MudText Typo="Typo.h5">Para a melhor Bia do mundo,</MudText>
+                <MudText Typo="Typo.body1" Class="mt-2">
+                    Feliz aniversário, amor da minha vida! Espero que tenhas gostado desta pequena surpresa que fiz com todo o carinho. Use teus prêmios (espero que sejam muitos) com sabedoria.
+                    Cada pergunta foi pensando em alguns dos nossos bons momentos juntos. Amo-te mais do que possas imaginar!
+                </MudText>
+                <MudText Typo="Typo.body2" Align="Align.Right" Class="mt-4"><i>- Com amor, Matheus Delmondes.</i></MudText>
+            </MudCardContent>
+            <MudCardActions Class="justify-end">
+                <MudButton Color="Color.Primary" OnClick="Close">Fechar</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+
+    // This method simply closes the dialog.
+    private void Close() => MudDialog.Close();
+}

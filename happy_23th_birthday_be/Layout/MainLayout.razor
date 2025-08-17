@@ -1,0 +1,43 @@
+﻿@inherits LayoutComponentBase
+
+@* These providers are essential for MudBlazor features. *@
+<MudThemeProvider Theme="_customTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudMainContent>
+        @* MudContainer centers the content and makes it responsive. *@
+        <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 85vh;">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    // Here we define our custom theme object.
+    private MudTheme _customTheme = new MudTheme()
+    {
+        // The PaletteLight property is used to define the colour palette for a light theme.
+        PaletteLight = new PaletteLight()
+        {
+            // Primary is the main interactive colour for buttons, links, etc.
+            Primary = "#E91E63",
+
+            // This sets the main background colour of the application.
+            Background = "#F5F5F5",
+
+            // This sets the background for the app bar, if you had one.
+            AppbarBackground = "#E91E63",
+
+            // We can define the text colours for clarity.
+            TextPrimary = "#424242",
+        },
+
+        // We can also adjust other properties, like the roundness of corners.
+        LayoutProperties = new LayoutProperties()
+        {
+            DefaultBorderRadius = "12px"
+        }
+    };
+}

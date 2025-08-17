@@ -1,0 +1,290 @@
+﻿@page "/quiz"
+@using happy_23th_birthday_be.Models
+@using happy_23th_birthday_be.Components
+
+@inject HttpClient Http
+@inject ILocalStorageService localStorage
+@inject NavigationManager NavManager
+@inject IDialogService DialogService
+
+<PageTitle>Quiz - MD+Bê</PageTitle>
+
+@if (!isGameReady)
+{
+    @* An improved loading indicator using MudBlazor *@
+    <div class="d-flex justify-center align-center" style="height:100%; width:100%; min-height: 100%; max-height: 100%; min-width: 100%; min-height: 100%;">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    </div>
+}
+else if (!allQuestions.Any())
+{
+    @* A clear message if the data fails to load *@
+    <MudText Typo="Typo.h6" Color="Color.Error">Ups! Não foi possível carregar as perguntas. Tente recarregar a página.</MudText>
+}
+else
+{
+    @* This main block contains the quiz and rewards logic *@
+    @if (!gameState.IsQuizCompleted)
+    {
+        <MudCard Elevation="4"
+                 Class="quiz-card animate__animated animate__fadeIn"
+                 Style="width: 100%; min-height: 350px;">
+
+            <MudCardContent Class="d-flex flex-column justify-center" Style="height: 100%;">
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Pergunta @(gameState.CurrentQuestionIndex + 1)</MudText>
+                <MudText Typo="Typo.body1" Class="mt-4">@currentQuestion.QuestionText</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                @* We can use a MudGrid to easily lay out our buttons *@
+                <MudGrid Spacing="2" Justify="Justify.Center">
+                    @for (int i = 0; i < currentQuestion.Options.Count; i++)
+                    {
+                        var optionIndex = i; // Capture the loop variable
+                        <MudItem xs="12">
+                            <MudButton Variant="Variant.Filled"
+                                       Color="@GetButtonColour(optionIndex)"
+                                       OnClick="@(() => HandleAnswer(optionIndex))"
+                                       Class="@GetButtonAnimation(optionIndex)"
+                                       FullWidth="true">
+                                @currentQuestion.Options[optionIndex]
+                            </MudButton>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudCardActions>
+        </MudCard>
+    }
+    else
+    {
+        @* The rewards section, now with the final message feature *@
+        <MudPaper Elevation="4" Class="rewards-section pa-4 animate__animated animate__jackInTheBox">
+            <MudText Typo="Typo.h4" GutterBottom="true" Align="Align.Center">🎉 Feliz Aniversário, Bê! 🎉</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Center" Style="margin-bottom: 1rem">Você completou o quiz! Aqui estão seus merecidos prêmios:</MudText>
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 8px;">
+                <MudList T="DisplayedReward" Clickable="true" Class="mt-4">
+                    @foreach (var rewardGroup in DisplayedRewards)
+                    {
+                        var allInGroupClaimed = rewardGroup.OriginalRewards.All(r => IsClaimed(r));
+
+                        <MudListItem OnClick="@(() => OpenClaimDialog(rewardGroup))"
+                                     Icon="@(allInGroupClaimed? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.WorkspacePremium)"
+                                     IconColor="@(allInGroupClaimed? Color.Default: Color.Primary)"
+                                     Class="@(allInGroupClaimed ? "claimed-item" : "")"
+                                     Disabled="@allInGroupClaimed">
+
+                            <div class="d-flex justify-space-between align-center" style="width:100%;">
+                                <div>
+                                    <MudText Typo="Typo.h6">@rewardGroup.Title</MudText>
+                                    <MudText Typo="Typo.body2">@rewardGroup.Description</MudText>
+                                </div>
+
+                                @if (rewardGroup.Quantity > 1)
+                                {
+                                    var claimedCount = rewardGroup.OriginalRewards.Count(r => IsClaimed(r));
+                                    <MudChip Color="Color.Primary" Variant="Variant.Text">@($"{claimedCount}/{rewardGroup.Quantity}")</MudChip>
+                                }
+                            </div>
+                        </MudListItem>
+                    }
+                </MudList>
+            </div>
+
+            @* The button to reveal the final message *@
+            @if (!gameState.FinalMessageRead)
+            {
+                <div class="d-flex justify-center mt-4">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Secondary"
+                               EndIcon="@Icons.Material.Filled.Favorite"
+                               OnClick="ShowFinalMessage">
+                        Um Último Presente...
+                    </MudButton>
+                </div>
+            }
+        </MudPaper>
+
+    }
+}
+
+
+@code {
+    // These keys are used for saving data to Local Storage.
+    private const string GameStateKey = "ourQuizGameState";
+
+    // Application state fields.
+    private bool isGameReady = false;
+    private GameState gameState = new();
+    private List<QuizQuestion> allQuestions = new();
+    private List<Reward> allRewards = new();
+
+    private QuizQuestion currentQuestion => allQuestions[gameState.CurrentQuestionIndex];
+    // This new property groups, counts, and sorts the rewards.
+    private List<DisplayedReward> DisplayedRewards => allRewards
+        .Where(r => gameState.UnlockedRewardIds.Contains(r.Id)) // 1. Get unlocked rewards
+        .GroupBy(r => new { r.Title, r.Description }) // 2. Group them by title and description
+        .Select(group => new DisplayedReward // 3. Create our new display object
+        {
+            Title = group.Key.Title,
+            Description = group.Key.Description,
+            Quantity = group.Count(),
+            OriginalRewards = group.ToList()
+        })
+        .OrderBy(r => r.OriginalRewards.All(reward => IsClaimed(reward))) // 4. Sort by claimed status (all claimed go to the bottom)
+        .ToList();
+
+    // Fields for controlling UI animations.
+    private int? selectedAnswerIndex;
+    private bool? isAnswerCorrect;
+
+    // This method runs when the component is first created.
+    protected override async Task OnInitializedAsync()
+    {
+        var savedState = await localStorage.GetItemAsync<GameState>(GameStateKey);
+        if (savedState != null)
+        {
+            gameState = savedState;
+        }
+
+        var quizData = await Http.GetFromJsonAsync<QuizData>("quiz-data.json");
+        if (quizData != null)
+        {
+            allQuestions = quizData.Questions;
+            allRewards = quizData.Rewards;
+        }
+
+        isGameReady = true;
+    }
+
+    // This is called when an answer button is clicked.
+    private async Task HandleAnswer(int optionIndex)
+    {
+        if (selectedAnswerIndex.HasValue) return;
+
+        selectedAnswerIndex = optionIndex;
+        isAnswerCorrect = (optionIndex == currentQuestion.CorrectAnswerIndex || currentQuestion.CorrectAnswerIndex == -1);
+
+        if (isAnswerCorrect.Value)
+        {
+            gameState.UnlockedRewardIds.Add(currentQuestion.RewardId);
+        }
+
+        StateHasChanged();
+        await localStorage.SetItemAsync(GameStateKey, gameState);
+        await Task.Delay(2000);
+
+        if (gameState.CurrentQuestionIndex < allQuestions.Count - 1)
+        {
+            gameState.CurrentQuestionIndex++;
+        }
+        else
+        {
+            gameState.IsQuizCompleted = true;
+        }
+
+        selectedAnswerIndex = null;
+        isAnswerCorrect = null;
+        await localStorage.SetItemAsync(GameStateKey, gameState);
+    }
+
+    // A small helper class to match the structure of our JSON file.
+    private class QuizData
+    {
+        public List<QuizQuestion> Questions { get; set; } = new();
+        public List<Reward> Rewards { get; set; } = new();
+    }
+
+    // A small helper class to represent a grouped reward for display purposes.
+    private class DisplayedReward
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        // We keep the original rewards to handle the 'claim' action.
+        public List<Reward> OriginalRewards { get; set; } = new();
+    }
+
+    // This method will clear the saved state and reload the page.
+    private async Task ResetGameState()
+    {
+        await localStorage.RemoveItemAsync(GameStateKey);
+        NavManager.NavigateTo("/", forceLoad: true);
+    }
+
+    // This method sets the colour of the answer buttons.
+    private Color GetButtonColour(int optionIndex)
+    {
+        if (!selectedAnswerIndex.HasValue)
+        {
+            return Color.Primary;
+        }
+        if (optionIndex == currentQuestion.CorrectAnswerIndex || currentQuestion.CorrectAnswerIndex == -1)
+        {
+            return Color.Success;
+        }
+        if (optionIndex == selectedAnswerIndex && !isAnswerCorrect.Value)
+        {
+            return Color.Error;
+        }
+        return Color.Default;
+    }
+
+    // This method sets the animation class for the answer buttons.
+    private string GetButtonAnimation(int optionIndex)
+    {
+        if (!selectedAnswerIndex.HasValue) return string.Empty;
+
+        if (optionIndex == currentQuestion.CorrectAnswerIndex || currentQuestion.CorrectAnswerIndex == -1)
+        {
+            return "animate__animated animate__bounce";
+        }
+        if (optionIndex == selectedAnswerIndex && !isAnswerCorrect.Value)
+        {
+            return "animate__animated animate__headShake";
+        }
+        return string.Empty;
+    }
+
+    // A helper method to check if a specific reward has been claimed.
+    private bool IsClaimed(Reward reward) => gameState.ClaimedRewardIds.Contains(reward.Id);
+
+    // This method now handles a grouped reward.
+    private async Task OpenClaimDialog(DisplayedReward rewardGroup)
+    {
+        // Find the first available (not claimed) reward in the group.
+        var rewardToClaim = rewardGroup.OriginalRewards.FirstOrDefault(r => !IsClaimed(r));
+
+        // If all rewards in the group have been claimed, do nothing.
+        if (rewardToClaim == null) return;
+
+        var parameters = new DialogParameters<ClaimRewardDialog>
+        {
+            { x => x.RewardTitle, rewardToClaim.Title }
+        };
+
+        var dialog = DialogService.Show<ClaimRewardDialog>("Confirmar Ação", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            gameState.ClaimedRewardIds.Add(rewardToClaim.Id);
+            await localStorage.SetItemAsync(GameStateKey, gameState);
+            StateHasChanged();
+        }
+    }
+    // This method now opens the final message as a proper modal dialog.
+    private async Task ShowFinalMessage()
+    {
+        // Set the options for the dialog to not have padding and no title bar.
+        var options = new DialogOptions()
+        {
+            NoHeader = true,
+            MaxWidth = MaxWidth.ExtraSmall
+        };
+
+        DialogService.Show<FinalMessageDialog>("", options);
+
+        // We still save the state to prevent the 'reveal' button from appearing again.
+        gameState.FinalMessageRead = true;
+        await localStorage.SetItemAsync(GameStateKey, gameState);
+    }
+}

@@ -1,0 +1,67 @@
+﻿@page "/"
+@inject NavigationManager NavManager
+
+<PageTitle>Uma Surpresa para Você!</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    @* A MudCarousel is perfect for a step-by-step, engaging introduction. *@
+    <MudCarousel Class="mud-width-full" Style="height:500px;"
+                 ShowArrows="true" ShowBullets="true" AutoCycle="false"
+                 TData="object">
+
+        <MudCarouselItem>
+            <div class="d-flex flex-column align-center justify-center pa-4" style="height:100%;">
+                <MudIcon Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h4" Align="Align.Center" Class="mt-4">Feliz Aniversário, Bê!</MudText>
+                <MudText Typo="Typo.h6" Align="Align.Center" Class="mt-2">Preparei uma surpresa especial para você...</MudText>
+            </div>
+        </MudCarouselItem>
+
+        <MudCarouselItem>
+            <div class="d-flex flex-column align-center justify-center pa-4" style="height:100%;">
+                <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Primary" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-4">Como Funciona?</MudText>
+                <MudText Typo="Typo.body1" Align="Align.Center" Class="mt-2">
+                    É um pequeno quiz sobre nós. Para cada pergunta que você acertar,
+                    você vai ganhar um "vale-presente" especial!
+                </MudText>
+                <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-4"><i>(Todos os prêmios serão revelados no final!)</i></MudText>
+            </div>
+        </MudCarouselItem>
+
+        <MudCarouselItem>
+            <div class="d-flex flex-column align-center justify-center pa-4" style="height:100%;">
+                <MudText Typo="Typo.h2" Color="Color.Primary" Style="font-weight: bold;">8</MudText>
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-2">Perguntas Especiais</MudText>
+                <MudText Typo="Typo.body1" Align="Align.Center" Class="mt-2">
+                    Escolhi 8 perguntas a dedo... porque eu sei que é o seu número da sorte (o meu também)! 😉
+                </MudText>
+            </div>
+        </MudCarouselItem>
+
+        <MudCarouselItem>
+            <div class="d-flex flex-column align-center justify-center pa-4" style="height:100%;">
+                <MudIcon Icon="@Icons.Material.Filled.RocketLaunch" Color="Color.Primary" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-4">Está pronta para começar?</MudText>
+                <MudText Typo="Typo.body1" Align="Align.Center" Class="mt-2">Vamos ver se sua memória está em dia! Boa sorte, linda! ❤</MudText>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           OnClick="StartQuiz"
+                           Size="Size.Large"
+                           Class="mt-6">
+                    Começar o Quiz!
+                </MudButton>
+            </div>
+        </MudCarouselItem>
+
+    </MudCarousel>
+</MudContainer>
+
+@code {
+    // British English Comments
+    // This method navigates the user to the main quiz page.
+    private void StartQuiz()
+    {
+        NavManager.NavigateTo("/quiz");
+    }
+}

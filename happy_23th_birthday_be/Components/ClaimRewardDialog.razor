@@ -1,0 +1,29 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CardGiftcard" Class="mr-3" /> Confirmar Resgate
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText>Você tem a certeza de que quer usar o vale: <strong>@RewardTitle</strong>?</MudText>
+        <MudText Typo="Typo.caption" Class="mt-2"><i>Esta ação não pode ser desfeita.</i></MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Sim, Usar!</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    // This allows the main page to pass parameters to the dialog.
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter] public string RewardTitle { get; set; } = string.Empty;
+
+    // This method is called when the 'Submit' button is clicked.
+    // It closes the dialog and returns 'true' as the result.
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    // This method is called when the 'Cancel' button is clicked.
+    private void Cancel() => MudDialog.Cancel();
+}
