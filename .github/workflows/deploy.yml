@@ -1,0 +1,39 @@
+# British English Comments
+# Workflow name
+name: Deploy to GitHub Pages
+
+# This workflow runs on a push to the 'master' branch.
+on:
+  push:
+    branches: [ master ]
+
+# Job configuration
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # IMPORTANT: This step now knows how to find your project in the subfolder.
+      - name: Publish .NET Project
+        # We tell the command to run inside your project's subfolder.
+        working-directory: ./happy_23th_birthday_be 
+        run: |
+          dotnet publish happy_23th_birthday_be.csproj -c Release -o release /p:BasePath=/presente_23o_aniversario_be
+
+      - name: Add .nojekyll file
+        # The output path is now inside the subfolder as well.
+        run: touch ./happy_23th_birthday_be/release/wwwroot/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # The publish directory is now inside the project subfolder.
+          publish_dir: ./happy_23th_birthday_be/release/wwwroot
