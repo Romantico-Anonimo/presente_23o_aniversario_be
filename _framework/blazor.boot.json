@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "happy_23th_birthday_be",
   "resources": {
-    "hash": "sha256-nFgciSdCgJXrimqU9s7AzOPbnUpAgg4tBykHY1wYiZU=",
+    "hash": "sha256-D7OVzjgAtOom5TRtKLeJ3JQi4GkiTMK4E4pO5OtKYm0=",
     "jsModuleNative": {
       "dotnet.native.8.0.19.ihm50f0zha.js": "sha256-O/NCYcAN9uPocD7ns7AzF/cqx7f5vL1PTJCQs0vEXyk="
     },
@@ -18,7 +18,7 @@
     },
     "assembly": {
       "Blazored.LocalStorage.wasm": "sha256-OaMAAd5n7ORfyur5e3QIyEVKJ76MKIvwbg7/icnnYcU=",
-      "happy_23th_birthday_be.wasm": "sha256-zeQoylFmnE0Bodrp/nqwrFOZedV1eTXWNkUrWCavXjw=",
+      "happy_23th_birthday_be.wasm": "sha256-PbxvNFVkZuy+5EMK7LkBdfm3A8weawHt8lL8zM8bHMo=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-O/cmN8vXPw41uzirqKnywPYp71yD1rOauWwr/qeepdQ=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-SW1UAN2OtL3jWjBgQrYCRVdbypSBhR64XYaZAhTguFo=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-JFOFe/qTqGF/vwqXwsxqdlhFvxevfYJ700sbdKtAEmM=",
