@@ -1,11 +1,10 @@
 {
-  "name": "happy_23th_birthday_be",
-  "short_name": "happy_23th_birthday_be",
-  "id": "./",
+  "name": "Um Presente para a Bê",
+  "short_name": "Presente Bê",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#03173d",
+  "background_color": "#F5F5F5",
+  "theme_color": "#E91E63",
   "prefer_related_applications": false,
   "icons": [
     {
