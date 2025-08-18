@@ -77,7 +77,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-lFFf+0vZYd\/kjnuqxICO4ECkWhQ3ahT5JGdZpoW\/YeU=",
+      "hash": "sha256-jrt93Y7TE5\/bA6BTUclymWIWOXb63zS07Qf8yPHlR7U=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -85,7 +85,7 @@
       "url": "_framework\/Blazored.LocalStorage.wasm"
     },
     {
-      "hash": "sha256-GFQjWT\/wbmabduZ1QNE1\/x+74bTIlK77QNsYlBUIu9U=",
+      "hash": "sha256-gbuGQs+ZPIRwNlX2wA3gFMd7WLRIkT0IX8TJUgXnKK8=",
       "url": "_framework\/happy_23th_birthday_be.wasm"
     },
     {
@@ -257,5 +257,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "0JpwplYM"
+  "version": "vtyPFact"
 };
