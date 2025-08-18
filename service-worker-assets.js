@@ -37,7 +37,7 @@
       "url": "lib\/animate.css\/animate.min.css"
     },
     {
-      "hash": "sha256-4tc8sjqrpcCXE7vmO4Hw+MRqDo2i52WlH3viHW1iDzI=",
+      "hash": "sha256-Jc09OkIvim94lfYdYWEEca1t85xM5z\/CNSNkaUzx0AY=",
       "url": "manifest.webmanifest"
     },
     {
@@ -77,7 +77,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-dDnm2BlANdyrzOwY7bhalngDeaCVaItuXmLDYUl8Y9k=",
+      "hash": "sha256-mmUNbbtRkWdXcOtG6bnJNvnjTLZvqMZzXhrF10kApJo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -85,7 +85,7 @@
       "url": "_framework\/Blazored.LocalStorage.wasm"
     },
     {
-      "hash": "sha256-PbxvNFVkZuy+5EMK7LkBdfm3A8weawHt8lL8zM8bHMo=",
+      "hash": "sha256-iFNyGXkK514OUOEn0fZ\/Ye4AmnmnxSZYRhpAUSL9WCU=",
       "url": "_framework\/happy_23th_birthday_be.wasm"
     },
     {
@@ -257,5 +257,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "GDkdu0mV"
+  "version": "83UL51ug"
 };
